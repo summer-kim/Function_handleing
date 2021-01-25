@@ -34,20 +34,11 @@ const filter = (f, iter) => {
   return res;
 };
 
-const products = [
-  { name: '반팔티', price: 15000 },
-  { name: '긴팔티', price: 20000 },
-  { name: '핸드폰케이스', price: 15000 },
-  { name: '후드티', price: 30000 },
-  { name: '바지', price: 25000 },
-];
-//log(map((p) => p.price, products));
-//log(filter((p) => p.price > 15000, products));
-
 const mapped = new Map();
 mapped.set('a', 10);
 mapped.set('b', 20);
 //log(new Map(map(([a, b]) => [a, b * b], mapped)));
+/*
 log(
   filter(
     (i) => i % 2,
@@ -57,6 +48,23 @@ log(
       yield 3;
       yield 4;
       yield 5;
-    })()
+    })() //Generator 자체는 iter가 아니다. 실행시켜서 iter를 return 시켜야함
   )
 );
+*/
+
+//Reduce
+const reduce = (f, acc, iter) => {
+  if (!iter) {
+    iter = acc[Symbol.iterator]();
+    acc = iter.next().value; //first value is be a acc
+  }
+  for (const a of iter) {
+    acc = f(acc, a);
+  }
+  return acc;
+};
+//log(reduce((a, b) => a + b, 0, [1, 2, 3, 4, 5]));
+//log(reduce((a, b) => a + b, [1, 2, 3, 4, 5]));
+
+export { log, map, filter, reduce };
