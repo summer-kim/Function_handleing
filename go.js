@@ -16,7 +16,12 @@ log(
     )
   )
 );
-const go = (...args) => reduce((a, f) => f(a), args);
+
+//improve expression to make code easily understand
+//1. Go
+const go = (...args) => {
+  return reduce((a, f) => f(a), args);
+};
 
 go(
   0,
@@ -26,3 +31,12 @@ go(
   log
 );
 const add = (a, b) => a + b;
+//Second Expression
+//Through Go function, the order was reversed compared to First expression
+go(
+  products,
+  (products) => filter((p) => p.price < 20000, products),
+  (products) => map((p) => p.price, products),
+  (prices) => reduce(add, prices),
+  log
+);
